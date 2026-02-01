@@ -5,85 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Crazy Question ❤️</title>
     <style>
-        body, html {
-            margin: 0; padding: 0; height: 100%; width: 100%;
-            font-family: 'Comic Sans MS', cursive; overflow: hidden;
-            /* Using your new PNG background */
-            background: url('bg.png') no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 240, 243, 0.9); 
-            display: flex; justify-content: center; align-items: center; z-index: 2000;
-        }
-
-        .start-btn {
-            padding: 20px 40px; font-size: 1.5rem; background: #ff4081; color: white;
-            border: none; border-radius: 50px; cursor: pointer; font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        #main-content {
-            display: none; flex-direction: column; align-items: center; 
-            justify-content: center; height: 100vh;
-        }
-
-        .image-container {
-            width: 320px; border-radius: 30px; border: 8px solid white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); margin-bottom: 20px;
-            overflow: hidden; background: white;
-        }
-        .main-img { width: 100%; display: block; }
-
-        h1 {
-            color: #d63384; font-size: 1.5rem; padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 20px; margin-bottom: 40px;
-        }
-
-        .btn-wrapper {
-            display: flex; justify-content: center; align-items: center; gap: 50px;
-            width: 100%; height: 100px; position: relative;
-        }
-
-        .cloud-btn {
-            width: 170px; height: 90px; border: none; cursor: pointer; font-family: inherit;
-            font-weight: bold; font-size: 1rem; display: flex; align-items: center;
-            justify-content: center; border-radius: 50px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1); z-index: 10;
-        }
-
-        #yesBtn { background: #bbdefb; color: #1a237e; position: relative; }
+        :root { --blue: #2196F3; --yellow: #FBC02D; --pink: #ff4081; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-family: 'Comic Sans MS', cursive; overflow: hidden; background: url('bg.png') no-repeat center center fixed; background-size: cover; cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="font-size: 20px;"><text y="15">✨</text></svg>'), auto; }
         
-        #noBtn { 
-            background: #fff9c4; color: #616161; 
-            position: absolute; transition: all 0.1s ease-out;
-            z-index: 100;
-        }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 240, 243, 0.95); display: flex; justify-content: center; align-items: center; z-index: 2000; transition: opacity 0.8s ease; }
+        .start-btn { padding: 25px 50px; font-size: 1.8rem; background: var(--pink); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: transform 0.3s; }
+        
+        #main-content { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        .image-container { width: 320px; border-radius: 30px; border: 8px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.3); margin-bottom: 20px; overflow: hidden; background: white; animation: float 3s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        #success-msg {
-            display: none; position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); z-index: 3000;
-            background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 30px;
-            border: 5px solid #ffc1e3;
-        }
+        #typing-text { color: #d63384; font-size: 1.6rem; min-height: 80px; max-width: 80%; padding: 20px; background: rgba(255, 255, 255, 0.85); border-radius: 25px; margin-bottom: 40px; text-align: center; }
 
-        .heart { position: fixed; top: -50px; z-index: 999; pointer-events: none; }
+        .btn-wrapper { display: flex; justify-content: center; align-items: center; gap: 60px; width: 100%; height: 120px; position: relative; }
+        .cloud-btn { width: 180px; height: 95px; border: none; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; border-radius: 50px; box-shadow: 0 8px 15px rgba(0,0,0,0.1); z-index: 10; opacity: 0; transition: opacity 0.5s; }
+        #yesBtn { background: #bbdefb; color: #1a237e; }
+        #noBtn { background: #fff9c4; color: #616161; position: absolute; z-index: 100; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        #success-msg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3000; background: white; padding: 50px; border-radius: 40px; border: 8px solid #ffc1e3; text-align: center; box-shadow: 0 0 100px rgba(255, 64, 129, 0.5); }
+        .cursor-heart { position: fixed; pointer-events: none; transform: translate(-50%, -50%); animation: fadeOut 1s forwards; z-index: 2500; font-size: 20px; }
+        @keyframes fadeOut { to { opacity: 0; transform: translate(-50%, -150%) scale(2); } }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
-<body>
+<body onclick="createRipple(event)">
 
-    <div id="overlay">
-        <button class="start-btn" onclick="startExperience()">Open Your Message ❤️</button>
-    </div>
+    <div id="overlay"><button class="start-btn" onclick="startExperience()">Open Your Message ❤️</button></div>
 
     <div id="main-content">
-        <div class="image-container">
-            <img src="van.jpg" class="main-img">
-        </div>
-        <h1>Hey, well, if we are both going crazy then<br>we will go crazy together right?</h1>
+        <div class="image-container"><img src="van.jpg" style="width:100%"></div>
+        <div id="typing-text"></div>
         <div class="btn-wrapper">
             <button id="yesBtn" class="cloud-btn" onclick="celebrate()">Yeah, crazy together</button>
             <button id="noBtn" class="cloud-btn" onmouseover="moveNo()">No</button>
@@ -91,73 +42,87 @@
     </div>
 
     <div id="success-msg">
-        <h1 style="font-size: 3rem; background: none;">YAY! 🤪❤️</h1>
-        <p style="font-size: 1.5rem; color: #d63384;">Hopelessly devoted to our craziness!</p>
+        <h1 style="font-size: 4rem;">YAY! 🤪❤️</h1>
+        <p style="font-size: 1.8rem; color: #d63384;">Hopelessly devoted to our craziness!</p>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg"></audio>
 
     <script>
         const music = document.getElementById('bgMusic');
+        const textElement = document.getElementById('typing-text');
+        const fullText = "Hey, well, if we are both going crazy then we will go crazy together right?";
         let noScale = 1;
 
         function startExperience() {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('main-content').style.display = 'flex';
-            music.play().catch(() => {
-                window.addEventListener('click', () => { music.play(); }, { once: true });
-            });
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'flex';
+                music.play();
+                typeWriter(0);
+            }, 800);
         }
+
+        function typeWriter(i) {
+            if (i < fullText.length) {
+                textElement.innerHTML += fullText.charAt(i);
+                setTimeout(() => typeWriter(i + 1), 50);
+            } else {
+                // Show buttons only after typing finishes
+                document.getElementById('yesBtn').style.opacity = '1';
+                document.getElementById('noBtn').style.opacity = '1';
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if(Math.random() > 0.85) {
+                const h = document.createElement('div');
+                h.className = 'cursor-heart';
+                h.innerHTML = Math.random() > 0.5 ? '💙' : '💛';
+                h.style.left = e.pageX + 'px';
+                h.style.top = e.pageY + 'px';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 1000);
+            }
+        });
 
         function moveNo() {
             const btn = document.getElementById('noBtn');
-            noScale += 0.15; // Makes it grow
+            noScale += 0.2;
             btn.style.transform = `scale(${noScale})`;
-
-            const padding = 80;
-            const maxX = window.innerWidth - btn.offsetWidth - padding;
-            const maxY = window.innerHeight - btn.offsetHeight - padding;
-            
-            const randomX = Math.max(padding, Math.random() * maxX);
-            const randomY = Math.max(padding, Math.random() * maxY);
-            
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 100) + 50;
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 100) + 50;
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
         function celebrate() {
-            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('main-content').style.filter = 'blur(8px)';
             document.getElementById('success-msg').style.display = 'block';
-            
             setInterval(() => {
                 const heart = document.createElement('div');
-                heart.className = 'heart';
-                const isBlue = Math.random() > 0.5;
-                const isHollow = Math.random() > 0.4;
-                
+                heart.innerHTML = Math.random() > 0.5 ? '💙' : '💛';
+                heart.style.position = 'fixed';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                heart.style.color = isBlue ? '#2196F3' : '#FBC02D';
-                
-                if (isHollow) {
-                    heart.innerHTML = '♡';
-                    heart.style.fontWeight = '900';
-                } else {
-                    heart.innerHTML = '❤';
-                }
-                
+                heart.style.top = '-50px';
+                heart.style.fontSize = Math.random() * 30 + 20 + 'px';
                 heart.style.animation = `fall ${Math.random() * 2 + 3}s linear forwards`;
                 document.body.appendChild(heart);
-            }, 90);
+            }, 50);
+        }
+
+        function createRipple(e) {
+            const circle = document.createElement('div');
+            circle.style.cssText = `position:fixed;width:20px;height:20px;border-radius:50%;background:rgba(255,64,129,0.3);left:${e.clientX}px;top:${e.clientY}px;animation:ripple 0.6s linear forwards;pointer-events:none;`;
+            document.body.appendChild(circle);
+            setTimeout(() => circle.remove(), 600);
         }
     </script>
-
-    <style>
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-    </style>
+    <style> @keyframes ripple { to { transform: scale(10); opacity: 0; } } </style>
 </body>
 </html>
+</html>
+
 
 
