@@ -5,71 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Crazy Question ❤️</title>
     <style>
-        body { margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #fff0f3; font-family: 'Comic Sans MS', cursive; overflow: hidden; text-align: center; }
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff0f3; display: flex; justify-content: center; align-items: center; z-index: 2000; }
-        .start-btn { padding: 20px 40px; font-size: 1.5rem; background: #ff4081; color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; }
-        #main-content { display: none; flex-direction: column; align-items: center; width: 100%; }
-        .image-container { width: 320px; height: 200px; border-radius: 30px; border: 8px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 20px; overflow: hidden; background: #eee; }
-        .main-img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { color: #d63384; font-size: 1.4rem; padding: 0 20px; margin-bottom: 40px; }
-        .btn-wrapper { display: flex; justify-content: center; align-items: center; gap: 80px; width: 100%; height: 150px; position: relative; }
-        .cloud-btn { width: 170px; height: 90px; border: none; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 1rem; display: flex; align-items: center; justify-content: center; position: relative; border-radius: 50px; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); z-index: 10; }
-        .cloud-btn::after, .cloud-btn::before { content: ''; position: absolute; background: inherit; border-radius: 50%; z-index: -1; }
-        .cloud-btn::after { width: 70px; height: 70px; top: -35px; left: 25px; }
-        .cloud-btn::before { width: 60px; height: 60px; top: -30px; right: 20px; }
-        #yesBtn { background: linear-gradient(135deg, #fff9c4 0%, #bbdefb 100%); color: #1a237e; }
-        #noBtn { background: #e0e0e0; color: #616161; transition: all 0.1s ease-out; z-index: 100; position: relative; }
-        #success-msg { display: none; }
-        .heart { position: fixed; top: -10px; animation: fall linear forwards; z-index: 999; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            font-family: 'Comic Sans MS', cursive; overflow: hidden;
+            /* Using your new PNG background */
+            background: url('bg.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 240, 243, 0.9); 
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
+        }
+
+        .start-btn {
+            padding: 20px 40px; font-size: 1.5rem; background: #ff4081; color: white;
+            border: none; border-radius: 50px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #main-content {
+            display: none; flex-direction: column; align-items: center; 
+            justify-content: center; height: 100vh;
+        }
+
+        .image-container {
+            width: 320px; border-radius: 30px; border: 8px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); margin-bottom: 20px;
+            overflow: hidden; background: white;
+        }
+        .main-img { width: 100%; display: block; }
+
+        h1 {
+            color: #d63384; font-size: 1.5rem; padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px; margin-bottom: 40px;
+        }
+
+        .btn-wrapper {
+            display: flex; justify-content: center; align-items: center; gap: 50px;
+            width: 100%; height: 100px; position: relative;
+        }
+
+        .cloud-btn {
+            width: 170px; height: 90px; border: none; cursor: pointer; font-family: inherit;
+            font-weight: bold; font-size: 1rem; display: flex; align-items: center;
+            justify-content: center; border-radius: 50px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1); z-index: 10;
+        }
+
+        #yesBtn { background: #bbdefb; color: #1a237e; position: relative; }
+        
+        #noBtn { 
+            background: #fff9c4; color: #616161; 
+            position: absolute; transition: all 0.1s ease-out;
+            z-index: 100;
+        }
+
+        #success-msg {
+            display: none; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); z-index: 3000;
+            background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 30px;
+            border: 5px solid #ffc1e3;
+        }
+
+        .heart { position: fixed; top: -50px; z-index: 999; pointer-events: none; }
     </style>
 </head>
 <body>
-    <div id="overlay"><button class="start-btn" onclick="startExperience()">Open Your Message ❤️</button></div>
+
+    <div id="overlay">
+        <button class="start-btn" onclick="startExperience()">Open Your Message ❤️</button>
+    </div>
+
     <div id="main-content">
-        <div class="image-container"><img src="van.jpg" class="main-img" alt="Valentine"></div>
+        <div class="image-container">
+            <img src="van.jpg" class="main-img">
+        </div>
         <h1>Hey, well, if we are both going crazy then<br>we will go crazy together right?</h1>
         <div class="btn-wrapper">
             <button id="yesBtn" class="cloud-btn" onclick="celebrate()">Yeah, crazy together</button>
             <button id="noBtn" class="cloud-btn" onmouseover="moveNo()">No</button>
         </div>
     </div>
-    <div id="success-msg"><h1>YAY! 🤪❤️</h1><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z6eXJ6eXJ6eXJ6eXJ6eXJ6eXJ6eXJ6eXJ6eXJ6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26FLdmIp6wJr91JAI/giphy.gif" width="300"></div>
-    
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://media1.vocaroo.com/mp3/12WXrxPs6rhu" type="audio/mpeg">
+
+    <div id="success-msg">
+        <h1 style="font-size: 3rem; background: none;">YAY! 🤪❤️</h1>
+        <p style="font-size: 1.5rem; color: #d63384;">Hopelessly devoted to our craziness!</p>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <script>
         const music = document.getElementById('bgMusic');
-        
+        let noScale = 1;
+
         function startExperience() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('main-content').style.display = 'flex';
-            
-            // Hopelessly Devoted chorus start time
-            music.currentTime = 64;
-            music.volume = 1.0;
-            
-            // Force play with multiple attempts
-            let playPromise = music.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {
-                    // If blocked, wait for the next user click anywhere
-                    window.addEventListener('click', () => {
-                        music.play();
-                        music.currentTime = 64;
-                    }, { once: true });
-                });
-            }
+            music.play().catch(() => {
+                window.addEventListener('click', () => { music.play(); }, { once: true });
+            });
         }
 
         function moveNo() {
             const btn = document.getElementById('noBtn');
-            btn.style.position = 'fixed';
-            
-            // Screen Guard: Prevents button from leaving the window boundaries
-            const padding = 30; 
+            noScale += 0.15; // Makes it grow
+            btn.style.transform = `scale(${noScale})`;
+
+            const padding = 80;
             const maxX = window.innerWidth - btn.offsetWidth - padding;
             const maxY = window.innerHeight - btn.offsetHeight - padding;
             
@@ -83,18 +130,34 @@
         function celebrate() {
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('success-msg').style.display = 'block';
-            document.body.style.backgroundColor = '#ffc1e3';
+            
             setInterval(() => {
                 const heart = document.createElement('div');
-                heart.innerHTML = '❤️'; heart.className = 'heart';
+                heart.className = 'heart';
+                const isBlue = Math.random() > 0.5;
+                const isHollow = Math.random() > 0.4;
+                
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                heart.style.color = isBlue ? '#2196F3' : '#FBC02D';
+                
+                if (isHollow) {
+                    heart.innerHTML = '♡';
+                    heart.style.fontWeight = '900';
+                } else {
+                    heart.innerHTML = '❤';
+                }
+                
+                heart.style.animation = `fall ${Math.random() * 2 + 3}s linear forwards`;
                 document.body.appendChild(heart);
-            }, 100);
+            }, 90);
         }
     </script>
+
+    <style>
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
 </body>
 </html>
-
 
 
